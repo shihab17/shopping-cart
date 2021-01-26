@@ -25,11 +25,11 @@
 
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button class="btn btn-default" id="removeItem"><i class="fas fa-minus"></i></button>
+                           <input type="text" class="form-control text-center" id="noOfItem" value="1">
+                           <button class="btn btn-default" id="addItem"><i class="fas fa-plus"></i></button>
                         </div>
-                        <h5>$1219</h5>
+                        <h5>$ <span id="itemAmount">1219</span> </h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -77,6 +77,38 @@
          </div>
       </div>
    </section>
+   <script>
+      var amount = 1219;
+      var addItem1 = document.getElementById("addItem");
+      addItem1.addEventListener("click", function () {
+         var item = document.getElementById("noOfItem").value;
+         item++;
+         document.getElementById("noOfItem").value = item;
+         // var amount1 = document.getElementById("itemAmount").innerText;
+
+         var totalAmount = item * amount;
+         document.getElementById("itemAmount").innerText = totalAmount;
+      });
+      var removeItem1 = document.getElementById("removeItem");
+      removeItem1.addEventListener("click", function () {
+         var item = document.getElementById("noOfItem").value;
+         if (item > 0) {
+            item--;
+            var totalAmount = item * amount;
+            document.getElementById("noOfItem").value = item;
+            document.getElementById("itemAmount").innerText = totalAmount;
+         }
+         else {
+            item = 0;
+            var totalAmount = item * amount;
+            document.getElementById("noOfItem").value = item;
+            document.getElementById("itemAmount").innerText = totalAmount;
+         }
+
+      });
+
+
+   </script>
 </body>
 
 </html>
