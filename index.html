@@ -43,12 +43,12 @@
                      </div>
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button class="btn btn-default" id="removeItem1"><i class="fas fa-minus"></i></button>
+                           <input type="text" class="form-control text-center" id="noOfItem1" value="1">
+                           <button class="btn btn-default" id="addItem1"><i class="fas fa-plus"></i></button>
 
                         </div>
-                        <h5>$59</h5>
+                        <h5>$ <span id="item1Amount1">59</span> </h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -64,9 +64,9 @@
                      </div>
 
                      <div class="col-md-4 status">
-                        <h5>$1,278</h5>
-                        <h5>$0</h5>
-                        <h5>$1,278</h5>
+                        <h5>$ <span id="subTotal">1,278</span> </h5>
+                        <h5>$ <span id="tax">0</span> </h5>
+                        <h5>$ <span id="total">1,278</span> </h5>
                      </div>
                   </div>
                </div>
@@ -78,36 +78,68 @@
       </div>
    </section>
    <script>
-      var amount = 1219;
       var addItem1 = document.getElementById("addItem");
       addItem1.addEventListener("click", function () {
-         var item = document.getElementById("noOfItem").value;
-         item++;
-         document.getElementById("noOfItem").value = item;
-         // var amount1 = document.getElementById("itemAmount").innerText;
-
-         var totalAmount = item * amount;
-         document.getElementById("itemAmount").innerText = totalAmount;
+         addItem("noOfItem", "itemAmount");
       });
       var removeItem1 = document.getElementById("removeItem");
       removeItem1.addEventListener("click", function () {
-         var item = document.getElementById("noOfItem").value;
+         removeItem("noOfItem", "itemAmount");
+      });
+      var addItem2 = document.getElementById("addItem1");
+      addItem2.addEventListener("click", function () {
+         addItem("noOfItem1", "item1Amount1");
+      });
+      var removeItem2 = document.getElementById("removeItem1");
+      removeItem2.addEventListener("click", function () {
+         removeItem("noOfItem1", "item1Amount1");
+      });
+      function addItem(id, total) {
+         var item = document.getElementById(id).value;
+         item++;
+         document.getElementById(id).value = item;
+         var totalAmount = calculate(id, item);
+         document.getElementById(total).innerText = totalAmount;
+         totalCalculate();
+      }
+      function removeItem(id, total) {
+         var item = document.getElementById(id).value;
          if (item > 0) {
             item--;
-            var totalAmount = item * amount;
-            document.getElementById("noOfItem").value = item;
-            document.getElementById("itemAmount").innerText = totalAmount;
+            document.getElementById(id).value = item;
+            var totalAmount = calculate(id, item);
+            document.getElementById(total).innerText = totalAmount;
+            totalCalculate();
          }
          else {
             item = 0;
-            var totalAmount = item * amount;
-            document.getElementById("noOfItem").value = item;
-            document.getElementById("itemAmount").innerText = totalAmount;
+            document.getElementById(id).value = item;
+            var totalAmount = calculate(id, item);
+            document.getElementById(total).innerText = totalAmount;
+            totalCalculate();
          }
-
-      });
-
-
+      }
+      function calculate(id, item) {
+         if (id == "noOfItem") {
+            var totalAmount = item * 1219;
+            return totalAmount;
+         }
+         if (id == "noOfItem1") {
+            var totalAmount = item * 59;
+            return totalAmount;
+         }
+      }
+      function totalCalculate() {
+         var totalPhonePrice = document.getElementById("itemAmount").innerText;
+         var totalBackCoverPrice = document.getElementById("item1Amount1").innerText;
+         var subTotal = parseFloat(totalPhonePrice)  + parseFloat(totalBackCoverPrice);
+         document.getElementById("subTotal").innerText=subTotal;
+         var tax = document.getElementById("tax").innerText;
+         var tax = parseFloat(tax);
+         document.getElementById("tax").innerText=tax;
+         var total = subTotal+tax;
+         document.getElementById("total").innerText=total;
+      }
    </script>
 </body>
 
